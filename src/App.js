@@ -52,16 +52,23 @@ class App extends Component {
         this.setState({people:[...this.state.people, newPerson], view})
     }
 
-    // TODO: FIX SPLICE 
-    deletePerson = (editingIndex, view) =>{
-        var array = [...this.state.people];
-        const deletePeople = array.splice(editingIndex, 1)
+    // // TODO: FIX SPLICE 
+    // deletePerson = (editingIndex, view) =>{
+    //     var array = [...this.state.people];
+    //     const deletePeople = array.splice(editingIndex, 1)
 
-        if (editingIndex !== -1) {
-            array.splice(editingIndex, 1);
-            this.setState({people: array, view});
-          }
-    }
+    //     if (editingIndex !== -1) {
+    //         array.splice(editingIndex, 1);
+    //         this.setState({people: array, view});
+    //       }
+    // }const newPeople = this.state.people.map((person, i) => {
+
+        deletePerson = (editingIndex, view) => {
+            const afterDelete = this.state.people.filter((person, i) => { if (i !== editingIndex) return person })
+            this.setState({people: afterDelete, view});
+        }
+
+
 
     render() {
         let content
