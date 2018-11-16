@@ -1,5 +1,6 @@
 import React from 'react';
 import PersonEdit from './PersonEdit'
+import App from '../../App';
 import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
@@ -37,4 +38,18 @@ it('calls cancelPerson when cancel button is clicked', () => {
 
     // assert
     expect(cancelTransaction.calledOnce).toBe(true)
+})
+
+it('delete button exists, calls deletePerson', () => {
+    // setup
+    const personData = [{firstName: 'Margaret', lastName: 'Hamilton', id: '81d6ff6c-10f4-4db0-88f2-1ebf789b7779'}];
+    const index_dummy = 0;
+    const deletePerson = sinon.stub()
+    const personEditWrapper = shallow(<PersonEdit people={personData} deletePerson={deletePerson} editingIndex={index_dummy}/>)
+    // execute
+
+    const deleteButton = personEditWrapper.find('button').at(2)
+    deleteButton.simulate('click')
+    // assert
+    expect(deletePerson.calledOnce).toBe(true)
 })

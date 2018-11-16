@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PersonList from './components/PersonList/PersonList';
 import PersonEdit from './components/PersonEdit/PersonEdit';
+import PersonAdd from './components/PersonAdd/PersonAdd';
 import './styles/App.css';
 
 const uuid = require('uuid4');
@@ -40,12 +41,36 @@ class App extends Component {
         this.setState({view, editingIndex})
     }
 
+    addPerson = () => {
+       this.setState({view: "PersonAdd"})
+    }
+
+    savePerson = (firstName, lastName, view) => {
+
+        const newPerson = {firstName, lastName, id: '123456'}
+
+        this.setState({people:[...this.state.people, newPerson], view})
+    }
+
+    // TODO: FIX SPLICE 
+    deletePerson = (editingIndex, view) =>{
+        var array = [...this.state.people];
+        const deletePeople = array.splice(editingIndex, 1)
+
+        if (editingIndex !== -1) {
+            array.splice(editingIndex, 1);
+            this.setState({people: array, view});
+          }
+    }
+
     render() {
         let content
         if (this.state.view === "PersonList") {
-            content = <div><PersonList people={this.state.people} selectPerson={this.selectPerson}/></div>
+            content = <div><PersonList addPerson={this.addPerson} people={this.state.people} selectPerson={this.selectPerson}/></div>
         } else if(this.state.view === "PersonEdit") {
-            content = <PersonEdit saveEditedPerson={this.saveEditedPerson} editingIndex={this.state.editingIndex} people={this.state.people} cancelEditTransaction={this.cancelEditTransaction}/>
+            content = <PersonEdit deletePerson = {this.deletePerson} saveEditedPerson={this.saveEditedPerson} editingIndex={this.state.editingIndex} people={this.state.people} cancelEditTransaction={this.cancelEditTransaction}/>
+        }else if(this.state.view === "PersonAdd"){
+            content = <PersonAdd savePerson={this.savePerson} />
         }
         return (
             <div className="App">

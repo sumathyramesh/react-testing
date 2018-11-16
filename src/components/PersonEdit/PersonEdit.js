@@ -24,6 +24,7 @@ class PersonEdit extends Component {
                     
                     <button type="button" onClick={() => this.props.saveEditedPerson(this.state.curFirstName, this.state.curLastName, this.props.editingIndex)}>Save</button>
                     <button type="button" onClick={() => this.props.cancelEditTransaction()}>Cancel</button>
+                    <button type="button" onClick={() => this.props.deletePerson(this.props.editingIndex, 'PersonList')}>Delete</button>
                 </form>
             </div>
         );
